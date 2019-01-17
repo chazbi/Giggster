@@ -1,0 +1,12 @@
+SELECT count(DISTINCT l2p.location_id), property_id AS activity_type, location_type
+FROM locations2properties l2p
+
+JOIN (SELECT location_id, tag_id AS location_type FROM tags2locations WHERE tag_id IN (SELECT id FROM tags WHERE level = 2))
+AS t2l ON t2l.location_id = l2p.location_id
+
+JOIN (SELECT id FROM locations WHERE status = 'published' AND title NOT ILIKE '%test%') 
+     AS l ON l.id = l2p.location_id
+
+WHERE property_id = 'activity-meeting' AND search_index = 1
+GROUP BY activity_type, location_type
+ORDER BY activity_type, count DESC
