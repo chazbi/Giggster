@@ -1,0 +1,13 @@
+SELECT ((profile->>'first_name') || ' ' || (profile->>'last_name')) AS name, u.email, COUNT(i.id) AS nb_images, COUNT(DISTINCT booking_chat.id) AS chat_count, locations.title AS location_title, locations.category, ROUND((locations.search_score_sum)::numeric, 2) as search_score_sum, locations.search_score_fix,
+       COUNT(DISTINCT booking.id) as paid_bookings, AVG(booking.price)::int as average_booking_price,
+       ('https://giggster.com:8090/#locations/'||locations.id||'/location-info') as link
+       
+FROM locations LEFT JOIN booking_chat ON booking_chat.location_id=locations.id
+   LEFT JOIN booking on locations.id=booking.location_id
+   LEFT JOIN images i ON i.linked_object_id = locations.id
+   JOIN users u ON u.id = locations.owner_id
+WHERE locations.status = 'published' AND booking.status = 'paid'AND booking.price > 50
+AND ((profile->>'first_name') || ' ' || (profile->>'last_name')) NOT ILIKE '%Giggster%' AND email NOT ILIKE '%giggster%' AND ((profile->>'first_name') || ' ' || (profile->>'last_name')) NOT ILIKE '%baterovskiy%' 
+GROUP BY locations.title, locations.category, locations.search_score_sum, locations.search_score_fix, locations.id, u.email, ((profile->>'first_name') || ' ' || (profile->>'last_name'))
+ORDER BY chat_count DESC, nb_images DESC
+LIMIT 10
