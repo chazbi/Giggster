@@ -1,2 +1,2 @@
 # Giggster
-All my work as a data analyst intern @ Giggster (IP)
+Part of my work as a data analyst intern @ Giggster (More to be uploaded)
