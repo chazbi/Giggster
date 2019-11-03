@@ -1,6 +1,6 @@
 ## Sales Pipeline Success Prediction (More to be updated)
 
--- By Charles Bi
+-- By Charles (Haocheng) Bi
 
 ## Goal
 The goal of this project is to understand variables in determining if a sales lead will be a success. Based on the findings, the team is able to streamline revenue, segment clients, and optimize sales efficiency.
